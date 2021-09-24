@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+# Wrapper script to let ulauncher access the thoams script.
+/home/thoams/.nvm/versions/node/v14.17.6/bin/node /home/thoams/.nvm/versions/node/v14.17.6/bin/thoams ${@:1}

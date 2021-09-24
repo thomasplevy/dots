@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=ul-t start
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=thoams start
+Name=thoams start
+Comment[en_US]=
+Comment=

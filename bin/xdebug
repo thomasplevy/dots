@@ -1,0 +1,22 @@
+#! /bin/bash
+
+# Toggle xdebug status
+# Usage: xdebug <on|off>
+
+STATUS=${1-on}
+
+if [[ 'on' == $STATUS ]]; then
+	sudo sh -c 'echo "zend_extension=xdebug.so" > /etc/php/7.4/cli/conf.d/20-xdebug.ini' 
+else
+	sudo sh -c 'echo "; zend_extension=xdebug.so" > /etc/php/7.4/cli/conf.d/20-xdebug.ini' 
+fi
+
+SUCCESS=$( php -v | grep 'Xdebug' ) 
+
+if [[ "" == $SUCCESS && "off" == $STATUS ]]; then
+	echo "Success: Xdebug disabled"
+elif [[ "" != $SUCCESS && "on" == $STATUS ]]; then
+	echo "Success: Xdebug enabled"
+else
+	echo "Error"
+fi

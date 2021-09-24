@@ -1,0 +1,10 @@
+{
+  "name": "thoams",
+  "version": "1.0.0",
+  "bin": "cli.js",
+  "license": "MIT",
+  "dependencies": {
+    "clipboardy": "^2.3.0",
+    "commander": "^8.2.0"
+  }
+}

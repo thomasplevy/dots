@@ -1,0 +1,82 @@
+{
+    "a40262bc-a0f0-4ec1-996f-fbc81943c6c3": {
+        "id": "a40262bc-a0f0-4ec1-996f-fbc81943c6c3",
+        "name": "Google Search",
+        "keyword": "g",
+        "cmd": "https://google.com/search?q=%s",
+        "icon": "/usr/share/ulauncher/media/google-search-icon.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1585203123.5110087
+    },
+    "99f9c4c7-230c-49cc-8260-4aa96a8fbe56": {
+        "id": "99f9c4c7-230c-49cc-8260-4aa96a8fbe56",
+        "name": "Stack Overflow",
+        "keyword": "so",
+        "cmd": "http://stackoverflow.com/search?q=%s",
+        "icon": "/usr/share/ulauncher/media/stackoverflow-icon.svg",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1585203123.5110965
+    },
+    "0b781c7d-ecd7-436a-8521-62fc792a6702": {
+        "id": "0b781c7d-ecd7-436a-8521-62fc792a6702",
+        "name": "Search the LifterLMS Knowledge Base",
+        "keyword": "kb",
+        "cmd": "https://lifterlms.com/?s=%s",
+        "icon": "~/Pictures/lifterlms-icon-square.png",
+        "is_default_search": false,
+        "run_without_argument": false,
+        "added": 1585203212.2714396
+    },
+    "fc0550c2-557a-4d0b-a34a-4ca894f5f35a": {
+        "id": "fc0550c2-557a-4d0b-a34a-4ca894f5f35a",
+        "name": "Screen capture",
+        "keyword": "sc",
+        "cmd": "QT_SCREEN_SCALE_FACTORS='' flameshot gui --delay 500",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": true,
+        "added": 1585243217.6210759
+    },
+    "f9294bec-d13d-411c-82ed-028835b6b8f0": {
+        "id": "f9294bec-d13d-411c-82ed-028835b6b8f0",
+        "name": "Search my gists",
+        "keyword": "gist",
+        "cmd": "https://github.com/gocodebox/snippets/search?q=%s",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": false,
+        "added": 1586371654.283966
+    },
+    "0a40c9da-3cb2-4df5-b15e-478577cedfd8": {
+        "id": "0a40c9da-3cb2-4df5-b15e-478577cedfd8",
+        "name": "Search developer.lifterlms.com",
+        "keyword": "llms",
+        "cmd": "https://developer.lifterlms.com/?s=%s",
+        "icon": "~/Pictures/lifterlms-icon-square.png",
+        "is_default_search": false,
+        "run_without_argument": false,
+        "added": 1586373393.2842076
+    },
+    "915a6b6b-6820-4770-9900-8cc88ee1f6da": {
+        "id": "915a6b6b-6820-4770-9900-8cc88ee1f6da",
+        "name": "Search WordPress developer docs",
+        "keyword": "wp",
+        "cmd": "https://developer.wordpress.org/?s=%s",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": false,
+        "added": 1595865452.4980001
+    },
+    "dcad98a2-6005-431b-865b-eaf6d748546e": {
+        "id": "dcad98a2-6005-431b-865b-eaf6d748546e",
+        "name": "Search PHP Code Reference",
+        "keyword": "php",
+        "cmd": "https://www.php.net/manual-lookup.php?pattern=%s",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": false,
+        "added": 1596040483.3714383
+    }
+}

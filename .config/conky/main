@@ -1,0 +1,215 @@
+# Retrieves the current screen width.
+local wHandle = io.popen( "xdotool getdisplaygeometry | awk '{print $1}'" )
+local width = wHandle:read("*a")
+wHandle:close()
+
+local hHandle = io.popen( "xdotool getdisplaygeometry | awk '{print $2}'" )
+local height = hHandle:read("*a")
+hHandle:close()
+
+
+conky.config = {
+    color1 = '15171C', -- black
+    color2 = 'B24A56', -- red 
+    color3 = '92B477', -- green
+    color4 = 'C6735A', -- orange
+    color5 = '7C8FA5', -- blue
+    color6 = 'A5789E', -- magenta
+    color7 = '80CDCB', -- cyan
+    color8 = 'B3B8C3', -- white
+
+    -- white
+    default_color = 'B3B8C3',
+    default_outline_color = 'B3B8C3',
+    default_shade_color = 'B3B8C3',
+
+    default_bar_height = tonumber( height / 2 ),
+
+    background = true,
+
+    alignment = 'top_right',
+    gap_x = 10,
+    gap_y = 45,
+    
+    minimum_height = 5,
+    minimum_width = 5,
+    maximum_width = tonumber( width / 2 ),
+
+    border_width = 0,
+    border_inner_margin = 20,
+
+    cpu_avg_samples = 2,
+    draw_borders = false,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+    use_xft = true,
+    font = 'Anonymice Nerd Font:size=12',
+    net_avg_samples = 2,
+    no_buffers = true,
+    out_to_console = false,
+    out_to_stderr = false,
+    extra_newline = false,
+    stippled_borders = 0,
+    update_interval = 1.0,
+    uppercase = false,
+    use_spacer = 'none',
+    show_graph_scale = false,
+    show_graph_range = false,
+
+    own_window = true,
+    own_window_class = 'Conky',
+    own_window_type = 'desktop',
+
+    own_window_transparent = false,
+    own_window_argb_visual = true,
+    own_window_argb_value = 200,
+    own_window_colour = '15171C',
+
+    double_buffer = true, -- fix "flickering".
+
+    -- Section Header Underline.
+    template0 = os.getenv( "THOAMS_CONKY_TEMPLATE_0" ),
+
+    -- Network graphs.
+    template1 = os.getenv( "THOAMS_CONKY_TEMPLATE_1" ),
+}
+
+conky.text = [[
+# System Info
+$color3$nodename$color$alignr${scroll 20 3 ${execi 99999999999999999 lsb_release -ds} $machine }
+${template0}
+Kernel $alignr $kernel
+Uptime $alignr $uptime
+Upgrades $alignr#
+${if_match "0" != "${execi 180 apt list --upgradable | grep upgradable | wc -l}"}${color6}  ${color}${endif}#
+${execi 180 apt list --upgradable | grep upgradable | wc -l} (apt)
+
+# Date & Time
+${color3}Date$alignr$color${time %A, %B %d, %Y}
+${template0}
+Local $alignr ${time %l:%M:%S %p}
+Pacific $alignr ${tztime America/Los_Angeles %l:%M %p}${font}
+Central $alignr ${tztime America/Chicago %l:%M %p}
+Eastern $alignr ${tztime America/New_York %l:%M %p}
+Nigeria $alignr ${tztime Africa/Lagos (%a) %l:%M %p}
+Berlin $alignr ${tztime Europe/Berlin (%a) %l:%M %p}
+Italy $alignr ${tztime Europe/Rome (%a) %l:%M %p}
+
+# Battery
+${color3}Battery$alignr$color${battery_time}
+${template0}
+${execi 60 cat /sys/class/power_supply/BAT0/status}#
+${if_match ${battery_percent} < 30 }${color2}${endif} ${battery_bar}#
+${goto 264}${voffset -3}${font Anonymous Pro:bold:size=10}${color1}${battery_percent}%${font}${color}
+TLP ${alignr} ${execi 1800 sudo tlp-stat -s | grep State | cut -c18- } (${execi 1800 sudo tlp-stat -s | grep Mode | cut -c18- })
+
+# Temperature
+${color3}Temperature${color}${alignr}${execi 30 sudo tlp-stat -t | grep "CPU temp" | sed 's/[^0-9]*//g'}°
+${template0}
+Fan 1 $alignr ${execi 30 sensors | grep RPM | cut -c6- | sed -n '1 p' | sed 's/[^0-9]*//g'} RPM
+Fan 2 $alignr ${execi 30 sensors | grep RPM | cut -c6- | sed -n '2 p' | sed 's/[^0-9]*//g'} RPM
+
+# Network
+${color3}Network$alignr$color${scroll 26 3 ${execi 1800 iwgetid -r}}
+${template0}
+${template1}
+${if_match "Connected" == "${execi 180  nordvpn status | sed -n '1 p' | cut -c21-}" }#
+VPN${alignr}Connected
+IP${alignr}${execi 180 nordvpn status | sed -n '5 p' | cut -c14-}
+${else}#
+VPN${alignr}${color6}Disconnected${color}
+${endif}#
+
+# Devilbox
+${color3}Devilbox
+${template0}
+Bind${alignr}${if_match "${exec docker ps -f name=devilbox_bind_1 --quiet}" != "" }Running${else}Offline${endif}
+MailHog${alignr}${if_match "${exec docker ps -f name=devilbox_mailhog_1 --quiet}" != "" }Running${else}Offline${endif}
+MariaDB${alignr}${if_match "${exec docker ps -f name=devilbox_mysql_1 --quiet}" != "" }Running${else}Offline${endif}
+nginx${alignr}${if_match "${exec docker ps -f name=devilbox_httpd_1 --quiet}" != "" }Running${else}Offline${endif}
+PHP${alignr}${if_match "${exec docker ps -f name=devilbox_php_1 --quiet}" != "" }Running${else}Offline${endif}
+
+# Memory
+${color3}Memory$alignr$color$mem / $memmax
+${template0}
+${membar}#
+${goto 24}${color1}${voffset -3}${font Anonymous Pro:bold:size=10}$memperc%${font}
+
+# CPU
+${color3}CPU$alignr${color}Intel Core i9-9980HK @ 2.40GHz
+${template0}
+\#1 ${cpubar cpu0}#
+${voffset -3}${font Anonymous Pro:bold:size=10}#
+${if_match ${cpu cpu0} > 33 }${color1}${endif}#
+${goto 250}${cpu cpu0}%${color}#
+${goto 375}${freq_g 0} GHz#
+${goto 570}${execi 120 sensors | grep 'Core 0' | cut -c17-18}°${font}${color}
+\#2 ${cpubar cpu1}#
+${voffset -3}${font Anonymous Pro:bold:size=10}#
+${if_match ${cpu cpu1} > 33 }${color1}${endif}#
+${goto 250}${cpu cpu1}%${color}#
+${goto 375}${freq_g 1} GHz#
+${goto 570}${execi 120 sensors | grep 'Core 1' | cut -c17-18}°${font}${color}
+\#3 ${cpubar cpu2}#
+${voffset -3}${font Anonymous Pro:bold:size=10}#
+${if_match ${cpu cpu2} > 33 }${color1}${endif}#
+${goto 250}${cpu cpu2}%${color}#
+${goto 375}${freq_g 2} GHz#
+${goto 570}${execi 120 sensors | grep 'Core 2' | cut -c17-18}°${font}${color}
+\#4 ${cpubar cpu3}#
+${voffset -3}${font Anonymous Pro:bold:size=10}#
+${if_match ${cpu cpu3} > 33 }${color1}${endif}#
+${goto 250}${cpu cpu3}%${color}#
+${goto 375}${freq_g 3} GHz#
+${goto 570}${execi 120 sensors | grep 'Core 3' | cut -c17-18}°${font}${color}
+\#5 ${cpubar cpu4}#
+${voffset -3}${font Anonymous Pro:bold:size=10}#
+${if_match ${cpu cpu4} > 33 }${color1}${endif}#
+${goto 250}${cpu cpu4}%${color}#
+${goto 375}${freq_g 4} GHz#
+${goto 570}${execi 120 sensors | grep 'Core 4' | cut -c17-18}°${font}${color}
+\#6 ${cpubar cpu5}#
+${voffset -3}${font Anonymous Pro:bold:size=10}#
+${if_match ${cpu cpu5} > 33 }${color1}${endif}#
+${goto 250}${cpu cpu5}%${color}#
+${goto 375}${freq_g 5} GHz#
+${goto 570}${execi 120 sensors | grep 'Core 5' | cut -c17-18}°${font}${color}
+\#7 ${cpubar cpu6}#
+${voffset -3}${font Anonymous Pro:bold:size=10}#
+${if_match ${cpu cpu6} > 33 }${color1}${endif}#
+${goto 250}${cpu cpu6}%${color}#
+${goto 375}${freq_g 6} GHz#
+${goto 570}${execi 120 sensors | grep 'Core 6' | cut -c17-18}°${font}${color}
+\#8 ${cpubar cpu7}#
+${voffset -3}${font Anonymous Pro:bold:size=10}#
+${if_match ${cpu cpu7} > 33 }${color1}${endif}#
+${goto 250}${cpu cpu7}%${color}#
+${goto 375}${freq_g 7} GHz#
+${goto 570}${execi 120 sensors | grep 'Core 7' | cut -c17-18}°${font}${color}
+
+# Processes
+${color3}Processes${color}         PID    CPU%   MEM%
+${template0}
+${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+${top name 5} ${top pid 5} ${top cpu 5} ${top mem 5}
+${voffset -12}$hr${font Anonymous Pro:size=10}
+Total $processes   Running $running_processes${font}
+
+# File System
+${color3}File System${alignr}${color}${fs_used /}/${fs_size /}
+${template0}
+/ ${fs_bar /}
+
+# Music
+#${color3}Music
+#${template0}
+#${if_match "${exec sp current }" != "Error: Spotify is not running." }#
+#Title${alignr}${scroll 28 3 ${execi 5 sp current | grep "Title" | cut -c14- }}
+#Album${alignr}${execi 5 sp current | grep "Album" | sed -n '1 p' | cut -c14- }
+#Artist${alignr}${execi 5 sp current | grep "Artist" | sed -n '2 p' | cut -c14- }
+#${endif}
+]]

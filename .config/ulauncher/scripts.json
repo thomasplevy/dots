@@ -1,0 +1,19 @@
+[
+    {
+        "name": "rand",
+        "description": "Select to edit scripts",
+        "icon": null,
+        "script": "ul-t password",
+        "default_arguments": [
+            "32",
+            "strong"
+        ]
+    },
+    {
+        "name": "edit",
+        "description": "Select to edit scripts",
+        "icon": null,
+        "script": "xdg-open ~/.config/ulauncher/scripts.json",
+        "default_arguments": []
+    }
+]

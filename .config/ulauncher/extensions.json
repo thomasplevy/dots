@@ -1,0 +1,30 @@
+{
+    "com.github.brpaz.ulauncher-timestamp": {
+        "id": "com.github.brpaz.ulauncher-timestamp",
+        "url": "https://github.com/brpaz/ulauncher-timestamp",
+        "updated_at": "2020-03-25T23:48:44.294599",
+        "last_commit": "09cbed761d1cd6b02080d204e46b79b29f1eb7e3",
+        "last_commit_time": "2019-12-03T20:06:45"
+    },
+    "com.github.brpaz.ulauncher-lipsum": {
+        "id": "com.github.brpaz.ulauncher-lipsum",
+        "url": "https://github.com/brpaz/ulauncher-lipsum",
+        "updated_at": "2020-07-27T08:56:24.046696",
+        "last_commit": "1ebc1948733649c9168edfdd763de4fb43cc623c",
+        "last_commit_time": "2020-05-09T16:05:49"
+    },
+    "com.github.n4n0gh.ulauncher_clockify": {
+        "id": "com.github.n4n0gh.ulauncher_clockify",
+        "url": "https://github.com/n4n0GH/ulauncher_clockify",
+        "updated_at": "2021-02-19T08:42:58.853698",
+        "last_commit": "0e88ea5ac07f73aadeff66f8ec937e38ca4792f3",
+        "last_commit_time": "2020-11-18T22:52:53"
+    },
+    "com.github.nastuzzisamy.ulauncher-custom-scripts": {
+        "id": "com.github.nastuzzisamy.ulauncher-custom-scripts",
+        "url": "https://github.com/NastuzziSamy/ulauncher-custom-scripts",
+        "updated_at": "2021-09-23T13:34:28.679708",
+        "last_commit": "8249528fbaeb5210b063994149d85fc00146dc5e",
+        "last_commit_time": "2021-04-16T11:45:26"
+    }
+}

@@ -1,0 +1,7 @@
+#! /bin/bash
+
+# Wrapper to excute WP CLI commands against the llms devilbox container without having to enter the container.
+
+CMD="${@:1}"
+
+devilbox x "cd llms/htdocs && wp $CMD"

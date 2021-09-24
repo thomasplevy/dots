@@ -1,0 +1,107 @@
+-- Retrieves the current screen width.
+local handle = io.popen( "xdotool getdisplaygeometry | awk '{print $1}'" )
+min_width = tonumber( handle:read("*a") )
+handle:close()
+
+-- With a single monitor we have pixel scaling to deal with.
+if 3840 == min_width then
+  min_width = min_width / 2
+end
+
+conky.config = {
+    color1 = '15171C', -- black
+    color2 = 'B24A56', -- red 
+    color3 = '92B477', -- green
+    color4 = 'C6735A', -- orange
+    color5 = '7C8FA5', -- blue
+    color6 = 'A5789E', -- magenta
+    color7 = '80CDCB', -- cyan
+    color8 = 'B3B8C3', -- white
+
+    -- white
+    default_color = 'B3B8C3',
+    default_outline_color = 'B3B8C3',
+    default_shade_color = 'B3B8C3',
+
+    alignment = 'top_left',
+    gap_x = 0,
+    gap_y = 0,
+
+    minimum_height = 5,
+    minimum_width = tonumber( min_width ),
+
+    background = true,
+    
+    border_width = 0,
+    border_inner_margin = 10,
+
+    cpu_avg_samples = 2,
+    draw_borders = false,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+    use_xft = true,
+    font = 'Anonymice Nerd Font:size=12',
+    net_avg_samples = 2,
+    no_buffers = true,
+    out_to_console = false,
+    out_to_stderr = false,
+    extra_newline = false,
+    stippled_borders = 0,
+    update_interval = 1.0,
+    uppercase = false,
+    use_spacer = 'none',
+    show_graph_scale = false,
+    show_graph_range = false,
+
+    own_window = true,
+    own_window_class = 'Conky',
+    own_window_type = 'panel',
+
+    own_window_transparent = false,
+    own_window_argb_visual = true,
+    own_window_argb_value = 200,
+    own_window_colour = '15171C',
+
+    double_buffer = true, -- fix "flickering"
+}
+
+conky.text = [[
+${voffset 3}#
+ ${desktop} #
+${if_match 1 == ${desktop}}${endif}#
+${if_match 2 == ${desktop}}爵${endif}#
+${if_match 3 == ${desktop}}${endif}#
+${if_match 4 == ${desktop}}${endif}#
+$alignc${time %A, %B %d, %Y %l:%M:%S %p}#
+$alignr#
+# Camera
+${if_match "" == "${execi 60 fuser /dev/video0}"}#
+  #
+${else}#
+${color6}${color}  #
+${endif}#
+# Full
+${if_match "Full" == "${execi 60 cat /sys/class/power_supply/BAT0/status}"}#
+#
+# Charging
+${endif}#
+${if_match "Charging" == "${execi 60 cat /sys/class/power_supply/BAT0/status}"}#
+${if_updatenr 01}${endif}#
+${if_updatenr 02}${endif}#
+${if_updatenr 03}${endif}#
+${if_updatenr 04}${endif}#
+${if_updatenr 05}${endif}#
+${endif}#
+# Discharging
+${if_match "Discharging" == "${execi 60 cat /sys/class/power_supply/BAT0/status}"}#
+${if_match ${battery_percent} < 30 }${color2}${endif}#
+${if_updatenr 01}${endif}#
+${if_updatenr 02}${endif}#
+${if_updatenr 03}${endif}#
+${if_updatenr 04}${endif}#
+${if_updatenr 05}${endif}#
+${endif}#
+  ${battery_percent}% ${color}($battery_time)#
+${voffset -6}#
+]]
