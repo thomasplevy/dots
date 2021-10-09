@@ -26,5 +26,12 @@
         "updated_at": "2021-09-23T13:34:28.679708",
         "last_commit": "8249528fbaeb5210b063994149d85fc00146dc5e",
         "last_commit_time": "2021-04-16T11:45:26"
+    },
+    "com.github.epholys.ultz": {
+        "id": "com.github.epholys.ultz",
+        "url": "https://github.com/Epholys/ultz",
+        "updated_at": "2021-10-06T10:17:41.432397",
+        "last_commit": "9f0749d6ab1fcb99545dae75934b698e5ff975b6",
+        "last_commit_time": "2021-05-12T14:01:01"
     }
 }

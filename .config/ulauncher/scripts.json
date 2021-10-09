@@ -1,13 +1,48 @@
 [
     {
         "name": "rand",
-        "description": "Select to edit scripts",
+        "description": "Generate a password",
         "icon": null,
         "script": "ul-t password",
         "default_arguments": [
             "32",
             "strong"
         ]
+    },
+    {
+        "name": "start",
+        "description": "Run start script",
+        "icon": null,
+        "script": "ul-t start",
+        "default_arguments": []
+    },
+    {
+        "name": "bar",
+        "description": "Reload the conky top bar",
+        "icon": null,
+        "script": "conky-run panel",
+        "default_arguments": []
+    },
+    {
+        "name": "clock",
+        "description": "Toggle the world clock widget",
+        "icon": null,
+        "script": "conky-run clock --toggle",
+        "default_arguments": []
+    },
+    {
+        "name": "monitor",
+        "description": "Toggle the monitor widget",
+        "icon": null,
+        "script": "conky-run monitor --toggle",
+        "default_arguments": []
+    },
+    {
+        "name": "widgets",
+        "description": "Toggle all conky widgets",
+        "icon": null,
+        "script": "conky-run clock --toggle && conky-run monitor --toggle",
+        "default_arguments": []
     },
     {
         "name": "edit",

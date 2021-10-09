@@ -1,3 +1,8 @@
+# Top bar / panel
+
+package.path = package.path .. ";/home/thoams/.config/conky/?.lua"
+require "./colors";
+
 -- Retrieves the current screen width.
 local handle = io.popen( "xdotool getdisplaygeometry | awk '{print $1}'" )
 min_width = tonumber( handle:read("*a") )
@@ -9,19 +14,6 @@ if 3840 == min_width then
 end
 
 conky.config = {
-    color1 = '15171C', -- black
-    color2 = 'B24A56', -- red 
-    color3 = '92B477', -- green
-    color4 = 'C6735A', -- orange
-    color5 = '7C8FA5', -- blue
-    color6 = 'A5789E', -- magenta
-    color7 = '80CDCB', -- cyan
-    color8 = 'B3B8C3', -- white
-
-    -- white
-    default_color = 'B3B8C3',
-    default_outline_color = 'B3B8C3',
-    default_shade_color = 'B3B8C3',
 
     alignment = 'top_left',
     gap_x = 0,
@@ -60,11 +52,13 @@ conky.config = {
 
     own_window_transparent = false,
     own_window_argb_visual = true,
-    own_window_argb_value = 200,
+    own_window_argb_value = 250,
     own_window_colour = '15171C',
 
     double_buffer = true, -- fix "flickering"
 }
+
+conky.config = add_colors( conky.config )
 
 conky.text = [[
 ${voffset 3}#
@@ -75,6 +69,10 @@ ${if_match 3 == ${desktop}}${endif}#
 ${if_match 4 == ${desktop}}${endif}#
 $alignc${time %A, %B %d, %Y %l:%M:%S %p}#
 $alignr#
+# APT
+${if_match "0" != "${execi 180 apt list --upgradable | grep upgradable | wc -l}"}#
+${color6}${color}  # 
+${endif}#
 # Camera
 ${if_match "" == "${execi 60 fuser /dev/video0}"}#
   #

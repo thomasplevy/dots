@@ -1,0 +1,23 @@
+-- World Clock
+
+package.path = package.path .. ";/home/thoams/.config/conky/?.lua"
+require "widget";
+
+conky.config = config;
+
+conky.config['alignment'] = 'top_right'
+conky.config['gap_x'] = 20
+conky.config['gap_y'] = 45
+
+conky.config['minimum_width'] = 220
+
+conky.text = [[
+${voffset -12}${color6}${hr 6}${color}
+ Local $alignr ${time %l:%M:%S %p} 
+ Pacific $alignr ${tztime America/Los_Angeles %l:%M %p} 
+ Central $alignr ${tztime America/Chicago %l:%M %p} 
+ Eastern $alignr ${tztime America/New_York %l:%M %p} 
+ Nigeria $alignr ${tztime Africa/Lagos (%a) %l:%M %p} 
+ Italy $alignr ${tztime Europe/Rome (%a) %l:%M %p} #
+${voffset 5}#
+]]

@@ -123,8 +123,11 @@ function getActiveWindowDimensions() {
 }
 
 function getActiveWindowDesktop() {
-
-	return parseInt( execSync( `xdotool getwindowfocus get_desktop_for_window` ).toString().trim() );
+	try {
+		return parseInt( execSync( `xdotool getwindowfocus get_desktop_for_window` ).toString().trim() );
+	} catch ( e ) {
+		return 0;
+	}
 
 }
 

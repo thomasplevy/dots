@@ -1,3 +1,5 @@
+require "colors"
+
 # Retrieves the current screen width.
 local wHandle = io.popen( "xdotool getdisplaygeometry | awk '{print $1}'" )
 local width = wHandle:read("*a")
@@ -9,19 +11,6 @@ hHandle:close()
 
 
 conky.config = {
-    color1 = '15171C', -- black
-    color2 = 'B24A56', -- red 
-    color3 = '92B477', -- green
-    color4 = 'C6735A', -- orange
-    color5 = '7C8FA5', -- blue
-    color6 = 'A5789E', -- magenta
-    color7 = '80CDCB', -- cyan
-    color8 = 'B3B8C3', -- white
-
-    -- white
-    default_color = 'B3B8C3',
-    default_outline_color = 'B3B8C3',
-    default_shade_color = 'B3B8C3',
 
     default_bar_height = tonumber( height / 2 ),
 
@@ -74,6 +63,8 @@ conky.config = {
     -- Network graphs.
     template1 = os.getenv( "THOAMS_CONKY_TEMPLATE_1" ),
 }
+
+conky.config = MergeTables( conky.config, colors )
 
 conky.text = [[
 # System Info
