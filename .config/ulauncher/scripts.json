@@ -50,5 +50,12 @@
         "icon": null,
         "script": "xdg-open ~/.config/ulauncher/scripts.json",
         "default_arguments": []
+    },
+    {
+        "name": "edit-wm",
+        "description": "Select to edit window manager config",
+        "icon": null,
+        "script": "xdg-open ~/thoams/wm-config.yml",
+        "default_arguments": []
     }
 ]

@@ -1,6 +1,7 @@
 const 
 	{ execSync } = require( 'child_process' ),
-	{ notify } = require( '../util' );
+	{ homedir } = require( 'os' ),
+	{ notify, getBackgroundImg, deleteFiles } = require( '../util' );
 
 module.exports = {
 	command: 'start',
@@ -11,14 +12,15 @@ module.exports = {
 		execSync( 'synclient HorizScrollDelta=-30' );
 		execSync( 'synclient VertScrollDelta=-30' );
 
-		// Kill existing conky and fail silently (when one isn't running).
-		try {
-			execSync( 'pkill -f conky' );
-		} catch ( e ) {}
-		execSync( 'conky -c ~/.config/conky/panel -dq', { stdio: 'inherit' } );
+		deleteFiles( `${ homedir() }/Downloads/*` );
+		deleteFiles( `${ homedir() }/Pictures/Peek*.mp4` );
+		deleteFiles( `${ homedir() }/Pictures/Peek*.gif` );
+		deleteFiles( `${ homedir() }/Pictures/Screenshot_*.png` );
+		deleteFiles( `${ homedir() }/Pictures/wallpaper-*.jpg` );
 
-		// Start Devilbox.
-		execSync( 'devilbox restart -s', { stdio: 'inherit' } );
+		getBackgroundImg( file => {
+			execSync( `gsettings set org.gnome.desktop.background picture-uri file:///${ file }` );
+		} );
 
 		notify( {
 			summary: 'thoams start',

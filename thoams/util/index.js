@@ -1,4 +1,48 @@
-const { execSync } = require( 'child_process' );
+const { execSync } = require( 'child_process' ),
+	https = require( 'https' ),
+	{ homedir } = require( 'os' ),
+	{ statSync, createWriteStream } = require( 'fs' ),
+	UnsplashSourceES6 = require( 'unsplash-source-es6' ),
+	unsplash = new UnsplashSourceES6(),
+	glob = require( 'glob' );
+
+function getBackgroundImg( cb ) {
+
+	const cats = [ 'textures', 'abstract', 'patterns', 'colors', 'shapes', 'lines' ],
+		cat = cats[ Math.floor( Math.random() * cats.length ) ],
+		img = unsplash.size( ...getScreenDimensions()[0] ).search( [ cat ] ).fetch(),
+		date = new Date(),
+		filePath = `${ homedir }/Pictures/wallpaper-${ cat }-${ date.toISOString().split( 'T' )[0] }.jpg`;
+
+	const saveImg = ( res ) => {
+
+		if ( [ 301, 302 ].includes( res.statusCode ) ) {
+			https.get( res.headers.location, saveImg );
+		} else {
+			res.pipe( createWriteStream( filePath ) );
+			cb( filePath );
+		}
+	};
+
+	https.get( img, saveImg );
+
+}
+
+function deleteFiles( fileGlob, maxDays = 7 ) {
+
+	const now = Math.round( Date.now() / 1000 ),
+		daysInSeconds = maxDays * 86400;
+
+	glob( fileGlob, ( err, files ) => {
+		files.forEach( file => {
+			const stat = statSync( file );
+			if ( now - Math.round( stat.ctime.getTime() / 1000 ) >= daysInSeconds ) {
+				execSync( `gio trash "${ file }"` );
+			}
+		} );
+	} );
+
+}
 
 function notify( { summary, body = '', expires = 2000, icon = '' } ) {
 
@@ -23,9 +67,12 @@ function moveWindow( id, { desktop = 0, display = [], pos = [], size = [] } ) {
 	// Move to the window to the desired desktop (and follow it).
 	if ( desktop !== getActiveDesktop() ) {
 		execSync( `wmctrl -ir ${ id } -t ${ desktop }` );
-		execSync( `wmctrl -s ${ desktop }` );
-	}
 
+		// Only follow the window when we're on a single display or the app is on the main monitor.
+		if ( 1 === availableDisplays || 0 === targetDisplay ) {
+			execSync( `wmctrl -s ${ desktop }` );
+		}
+	}
 
 	// Handle negative positioning (spacing from the right / bottom).
 	if ( x < 0 ) {
@@ -148,6 +195,10 @@ function getActiveWindowInfo() {
 }
 
 module.exports = {
+	deleteFiles,
+
+	getBackgroundImg,
+
 	moveWindow,
 	getActiveDesktop,
 	getActiveWindowInfo,

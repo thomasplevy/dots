@@ -1,73 +1,20 @@
-const { getActiveWindowInfo, getScreenDimensions, moveWindow, notify } = require( '../util' );
-
-// Default config for fullscreen apps that are always on the primary display.
-const defaultConfig = () => {
-	return {
-		display: [ 1, 1 ],
-		pos: [
-			[ 0, 0 ],
-			[ 0, 0 ],
-		],
-		size: [ 
-			[ 'fullscreen', 'fullscreen' ],
-			[ 'fullscreen', 'fullscreen' ],
-		],
-	};
-};
-
-const config = {
-	'brave-browser': {
-		desktop: 1,
-		...defaultConfig(),
-	},
-	kitty: {
-		desktop: 3,
-		display: [ 1, 2 ],
-		pos: [ 
-			[ 40, -40 ],
-			[ 40, -40 ],
-		],
-		size: [ 
-			[ 2800, 1600 ],
-			[ 2200, 1100 ],
-		],
-	},
-	slack: {
-		desktop: 0,
-		...defaultConfig(),
-	},
-	spotify: {
-		desktop: 3,
-		display: [ 1, 2 ],
-		pos: [
-			[ -690, 140 ],
-			[ -40, -60 ],
-		],
-		size: [
-			[ 2400, 1600 ],
-			[ 1800, 1400 ],
-		],
-	},
-	sublime_text: {
-		desktop: 2,
-		display: [ 1, 2 ],
-		pos: [
-			[ 0, 0 ],
-			[ -1595, -790 ],
-		],
-		size: [
-			[ 'fullscreen', 'fullscreen' ],
-			[ 2400, 1400 ],
-		] 
-	},
-	zoom: {
-		desktop: 0,
-		...defaultConfig(),
-	}
-};
+const
+	{ readFileSync } = require( 'fs' ), 
+	pathJoin = require( 'path' ).join,
+	{ getActiveWindowInfo, getScreenDimensions, moveWindow, notify } = require( '../util' ),
+	parseYaml = require( 'yaml' ).parse;
 
 function getConfig( app ) {
-	return config[ app ];
+
+	const config = parseYaml( 
+			readFileSync( 
+				pathJoin( __dirname, '../wm-config.yml' ),
+				'utf8'
+			),
+			{ merge: true }
+		);
+
+	return config[ app ] || config['__'];
 }
 
 module.exports = {

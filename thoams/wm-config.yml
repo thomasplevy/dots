@@ -1,0 +1,62 @@
+# Default Config.
+__: &DEFAULT
+  desktop: 1
+  display: [ 1, 1 ]
+  pos:
+    - [ 0, 0 ]
+    - [ 0, 0 ]
+  size:
+    - [ fullscreen, fullscreen ]
+    - [ fullscreen, fullscreen ]
+
+# Applications.
+brave-browser:
+  << : *DEFAULT
+
+jetbrains-datagrip:
+  desktop: 4
+  display: [ 1, 2 ]
+  pos:
+    - [ 0, 0 ]
+    - [ -20, 20 ]
+  size:
+    - [ fullscreen, fullscreen ]
+    - [ 2200, 1440 ]
+
+kitty:
+  desktop: 3,
+  display: [ 1, 2 ]
+  pos:
+    - [ 40, -40 ]
+    - [ 40, -40 ]
+  size:
+    - [ 2800, 1600 ]
+    - [ 2200, 1100 ]
+
+slack:
+  desktop: 0,
+  << : *DEFAULT
+
+spotify:
+  desktop: 3,
+  display: [ 1, 2 ]
+  pos:
+    - [ -40, 160 ]
+    - [ -40, -60 ]
+  size:
+    - [ 2400, 1600 ]
+    - [ 1800, 1400 ]
+
+sublime_text:
+  desktop: 2,
+  display: [ 1, 2 ]
+  pos:
+    - [ 0, 0 ]
+    - [ -1480, -790 ]
+  size:
+    - [ fullscreen, fullscreen ]
+    - [ 2400, 1400 ]
+
+zoom:
+  desktop: 0,
+  << : *DEFAULT
