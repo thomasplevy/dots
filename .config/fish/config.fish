@@ -69,3 +69,7 @@ alias upgrade="sudo apt upgrade -y && sudo apt autoremove -y"
 
 # Kitty SSH
 alias ssh="kitty +kitten ssh"
+
+
+# Used by various commands for quickly getting to LifterLMS plugins.
+set -x go_cmd_dir ~/srv/www/llms/htdocs/wp-content/plugins/

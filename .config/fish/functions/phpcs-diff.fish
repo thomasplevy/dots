@@ -1,5 +1,3 @@
-# set go_cmd_dir ~/srv/www/llms/htdocs/wp-content/plugins/
-
 function phpcs-diff
 
 	argparse 'e/errors' 'f/fix' 'b/branch=' -- $argv

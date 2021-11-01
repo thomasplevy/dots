@@ -1,5 +1,3 @@
-set go_cmd_dir ~/srv/www/llms/htdocs/wp-content/plugins/
-
 function go
 
 	set -l dir $go_cmd_dir$argv[1]
