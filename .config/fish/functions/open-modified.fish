@@ -1,6 +1,31 @@
 function open-modified
 	
-	argparse 'A/all' 'U/unmerged' 'M/modified' 'N/new' -- $argv
+	argparse 'a/all' 'm/modified' 'n/new' 'u/unmerged' 'h/help' -- $argv
+
+	if set --query _flag_help
+		echo "usage: open-modified [-a, --all] [-m, --modified] [-n, --new] [-u, --unmerged] [-h, --help]"
+		echo ""
+		echo "Opens files identified by the 'git status' command."
+		echo ""
+		echo ""
+		echo "OPTIONS"
+		echo "  -a, --all"
+		echo "    Open all files identified by git status."
+		echo ""
+		echo "  -m, --modified"
+		echo "    Opens only modified files."
+		echo ""
+		echo "  -n, --new"
+		echo "    Opens only new files."
+		echo ""
+		echo "  -u, --unmerged"
+		echo "    Opens only unmerged files."
+		echo ""
+		echo "  -h, --help"
+		echo "    Displays this help manual."
+
+   		return 0
+	end
 
 	if test "$argv" != ""
 		set file_list $argv
