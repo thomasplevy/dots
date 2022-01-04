@@ -56,7 +56,8 @@ function moveWindow( id, { desktop = 0, display = [], pos = [], size = [] } ) {
 	const dimensions = getScreenDimensions(),
 		currentDisplay = getActiveWindowDisplay(),
 		availableDisplays = getNumberDisplays(),
-		targetDisplay = display[ availableDisplays - 1 ] - 1;
+		targetDisplay = display[ availableDisplays - 1 ] - 1,
+		debug = {};
 
 	let [ x, y ] = pos[ targetDisplay ],
 		[ w, h ] = size[ targetDisplay ];
@@ -87,6 +88,13 @@ function moveWindow( id, { desktop = 0, display = [], pos = [], size = [] } ) {
 		x = x + dimensions[0][0];
 	}
 
+	// Handle moving from the second monitor to the first.
+	if ( currentDisplay === 2 && 0 === targetDisplay ) {
+		// subtract the width of the second display from X to move it as far to the left as possible and fullscreen takes care of the rest.
+		x -= dimensions[ targetDisplay ][1]; 
+	}
+		debug.dimensions = dimensions;
+
 	// Handle request for fullscreen.
 	if ( 'fullscreen' === w ) {
 		execSync( `wmctrl -ir ${ id } -b add,maximized_horz` );
@@ -98,6 +106,8 @@ function moveWindow( id, { desktop = 0, display = [], pos = [], size = [] } ) {
 	}
 
 	execSync( `wmctrl -i -r ${ id } -e '0,${x},${y},${w},${h}'` );
+
+	return debug;
 
 }
 
