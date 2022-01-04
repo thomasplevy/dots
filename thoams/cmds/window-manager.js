@@ -1,5 +1,5 @@
 const
-	{ readFileSync } = require( 'fs' ), 
+	{ readFileSync, writeFileSync } = require( 'fs' ), 
 	pathJoin = require( 'path' ).join,
 	{ getActiveWindowInfo, getScreenDimensions, moveWindow, notify } = require( '../util' ),
 	parseYaml = require( 'yaml' ).parse;
@@ -24,16 +24,21 @@ module.exports = {
 	description: 'Moves a window to its configured location.',
 	action: () => {
 
-		const { id, app } = getActiveWindowInfo(),
+		const activeInfo = getActiveWindowInfo(),
+			{ id, app } = activeInfo,
 			activeConfig = getConfig( app );
 
+		let debug = null;
+
 		if ( activeConfig ) {
-			moveWindow( id, activeConfig );
+			debug = moveWindow( id, activeConfig );
 		}
+		
+		writeFileSync( pathJoin( __dirname, '../debug.log' ), JSON.stringify( { debug, activeConfig, activeInfo }, null, 2 ) );
 		
 		notify( {
 			summary: 'thoams wmv',
-			body: JSON.stringify( getActiveWindowInfo() ),
+			body: JSON.stringify( activeInfo ),
 		} )
 
 	},
