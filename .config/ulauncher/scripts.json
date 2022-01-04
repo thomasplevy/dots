@@ -45,6 +45,13 @@
         "default_arguments": []
     },
     {
+        "name": "brightness",
+        "description": "Fix brightness on external display",
+        "icon": null,
+        "script": "xrandr --output DP-1-3 --brightness 1",
+        "default_arguments": []
+    },
+    {
         "name": "edit",
         "description": "Select to edit scripts",
         "icon": null,
