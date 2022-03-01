@@ -5,10 +5,12 @@
 
 STATUS=${1-on}
 
+PHP_VERSION=$( php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;' )
+
 if [[ 'on' == $STATUS ]]; then
-	sudo sh -c 'echo "zend_extension=xdebug.so" > /etc/php/7.4/cli/conf.d/20-xdebug.ini' 
+	sudo sh -c "echo 'zend_extension=xdebug.so' > /etc/php/$PHP_VERSION/mods-available/xdebug.ini"
 else
-	sudo sh -c 'echo "; zend_extension=xdebug.so" > /etc/php/7.4/cli/conf.d/20-xdebug.ini' 
+	sudo sh -c "echo '; zend_extension=xdebug.so' > /etc/php/$PHP_VERSION/mods-available/xdebug.ini" 
 fi
 
 SUCCESS=$( php -v | grep 'Xdebug' ) 
