@@ -52,6 +52,17 @@ function fish_prompt
             end
             return 1
         end
+
+        function _repo_symbol
+            if _is_hg_repo
+                echo 'hg'
+                return 0
+            else if _is_git_repo
+                echo ''
+                return 0
+            end
+            return 1
+        end
     end
 
     set -l cyan (set_color -o cyan)
@@ -61,26 +72,35 @@ function fish_prompt
     set -l blue (set_color -o blue)
     set -l normal (set_color normal)
 
-    set -l arrow_color "$green"
+    set -l arrow_color "$normal"
     if test $__last_command_exit_status != 0
         set arrow_color "$red"
     end
 
-    set -l arrow "$arrow_color➜ "
+    set -l arrow "$arrow_color"
     if test "$USER" = 'root'
         set arrow "$arrow_color# "
     end
 
     set -l cwd $cyan(basename (prompt_pwd))
+    #if test '~' = "$cwd"
+    #    set cwd " " # there's an invisible home icon between those quotes
+    #end
 
     if set -l repo_type (_repo_type)
-        set -l repo_branch $red(_repo_branch_name $repo_type)
-        set repo_info "$blue $repo_type:($repo_branch$blue)"
 
+        set -l repo_color $blue
+        set -l dirty ""
         if [ (_is_repo_dirty $repo_type) ]
-            set -l dirty "$yellow ✗"
-            set repo_info "$repo_info$dirty"
+            set repo_color $red
+            set dirty " "
         end
+
+        set -l repo_branch $repo_color(_repo_branch_name $repo_type)
+
+        set -l repo_symbol (_repo_symbol)
+        set repo_info "$green $repo_symbol ($repo_branch$green)$repo_color$dirty"
+
     end
 
     echo -n -s $arrow ' '$cwd $repo_info $normal ' '
