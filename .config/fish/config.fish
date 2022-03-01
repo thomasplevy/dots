@@ -64,13 +64,12 @@ kitty + complete setup fish | source
 alias mydiff="diff --side-by-side --color"
 
 # Update
-alias clean-residuals="dpkg -l | grep '^rc' | awk '{print $2}' | xargs sudo dpkg --purge"
+alias clean-residuals="dpkg -l | grep '^rc' | awk '{print $2}' | xargs --no-run-if-empty sudo dpkg --purge" 
 alias update="sudo apt update && sudo apt list --upgradeable"
 alias upgrade="sudo apt upgrade -y && sudo apt autoremove -y && clean-residuals"
 
 # Kitty SSH
 alias ssh="kitty +kitten ssh"
-
 
 # Used by various commands for quickly getting to LifterLMS plugins.
 set -x go_cmd_dir ~/srv/www/llms/htdocs/wp-content/plugins/
