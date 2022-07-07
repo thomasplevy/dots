@@ -33,5 +33,12 @@
         "updated_at": "2021-10-06T10:17:41.432397",
         "last_commit": "9f0749d6ab1fcb99545dae75934b698e5ff975b6",
         "last_commit_time": "2021-05-12T14:01:01"
+    },
+    "com.github.fsevenm.ulauncher-wordc": {
+        "id": "com.github.fsevenm.ulauncher-wordc",
+        "url": "https://github.com/fsevenm/ulauncher-wordc",
+        "updated_at": "2022-06-03T14:45:50.477335",
+        "last_commit": "e286371cbf7faf909fa50b3b14776978e3f07073",
+        "last_commit_time": "2021-01-14T02:32:41"
     }
 }

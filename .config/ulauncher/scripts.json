@@ -46,10 +46,12 @@
     },
     {
         "name": "brightness",
-        "description": "Fix brightness on external display",
+        "description": "Set the brightness of all connected displays",
         "icon": null,
-        "script": "xrandr --output DP-1-3 --brightness 1",
-        "default_arguments": []
+        "script": "ul-t brightness",
+        "default_arguments": [
+            "1"
+        ]
     },
     {
         "name": "edit",
@@ -63,6 +65,13 @@
         "description": "Select to edit window manager config",
         "icon": null,
         "script": "xdg-open ~/thoams/wm-config.yml",
+        "default_arguments": []
+    },
+    {
+        "name": "edit-links",
+        "description": "Select to edit new tab links",
+        "icon": null,
+        "script": "xdg-open ~/new-tab/links.json",
         "default_arguments": []
     }
 ]
