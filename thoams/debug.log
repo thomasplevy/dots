@@ -1,0 +1,46 @@
+{
+  "debug": {
+    "dimensions": [
+      [
+        2048,
+        1152
+      ],
+      [
+        3840,
+        2160
+      ]
+    ]
+  },
+  "activeConfig": {
+    "desktop": "2,",
+    "display": [
+      1,
+      2
+    ],
+    "pos": [
+      [
+        0,
+        0
+      ],
+      [
+        -1480,
+        -790
+      ]
+    ],
+    "size": [
+      [
+        "fullscreen",
+        "fullscreen"
+      ],
+      [
+        2400,
+        1400
+      ]
+    ]
+  },
+  "activeInfo": {
+    "id": "37748743",
+    "app": "sublime_text",
+    "desktop": 0
+  }
+}

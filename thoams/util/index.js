@@ -1,10 +1,16 @@
 const { execSync } = require( 'child_process' ),
+	{ appendFileSync } = require( 'fs' ), 
 	https = require( 'https' ),
 	{ homedir } = require( 'os' ),
 	{ statSync, createWriteStream } = require( 'fs' ),
 	UnsplashSourceES6 = require( 'unsplash-source-es6' ),
 	unsplash = new UnsplashSourceES6(),
-	glob = require( 'glob' );
+	glob = require( 'glob' ),
+	pathJoin = require( 'path' ).join;
+
+function debug( data ) {	
+	appendFileSync( pathJoin( __dirname, '../debug.log' ), JSON.stringify( data, null, 2 ) );
+}
 
 function getBackgroundImg( cb ) {
 
@@ -204,8 +210,23 @@ function getActiveWindowInfo() {
 
 }
 
+
+function setBrightness( value = 1 ) {
+
+	// Accept brightness value as either a perc (0-100) or as a decimal (0.0 - 1).
+	value = value > 1 ? value / 100 : value;
+
+	const displays = execSync( 'xrandr | grep " connected " | awk \'{ print$1 }\'' ).toString().trim().split( "\n" );
+
+	displays.forEach( id => {
+		execSync( `xrandr --output ${ id } --brightness ${ value }` );
+	} );
+
+}
+
 module.exports = {
 	deleteFiles,
+	debug,
 
 	getBackgroundImg,
 
@@ -216,4 +237,6 @@ module.exports = {
 	getActiveWindowApp,
 	getScreenDimensions,
 	notify,
+
+	setBrightness,
 };
