@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+ACTION=${1-"unknown"}
+
+declare -A LOOKS
+LOOKS[angry]="ಠ_ಠ"
+LOOKS[cool]="(-■_■)"
+LOOKS[fingers]="┌∩┐(ಠ_ಠ)┌∩┐"
+LOOKS[flip]="(╯°□°)╯︵ ┻━┻"
+LOOKS[happy]="•‿•"
+LOOKS[lenny-happy]="( ͡° ͜ʖ ͡°)"
+LOOKS[lenny-sad]="( ͡° ʖ̯ ͡°)"
+LOOKS[sad]="ʘ︵ʘ"
+LOOKS[shrug]="¯\_(ツ)_/¯"
+
+if [ "list" == "$ACTION" ]; then
+    for look in "${!LOOKS[@]}"; do
+        key=$(printf '%-12s' "${look}")
+        echo "${key} ${LOOKS[${look}]}"
+        echo ""
+    done
+    exit 0
+fi
+
+echo ${LOOKS[$ACTION]}
+echo ${LOOKS[$ACTION]} | xclip -sel clip
+
